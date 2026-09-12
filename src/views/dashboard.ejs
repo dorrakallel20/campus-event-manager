@@ -1,0 +1,61 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+<div class="container">
+  <h1 class="mb-4">Dashboard</h1>
+
+  <div class="stat-grid mb-4">
+    <div class="stat-square">
+      <div class="stat-square-label">Users</div>
+      <div class="stat-square-value"><%= usersCount %></div>
+    </div>
+    <div class="stat-square">
+      <div class="stat-square-label">Events</div>
+      <div class="stat-square-value"><%= eventsCount %></div>
+    </div>
+    <div class="stat-square">
+      <div class="stat-square-label">Upcoming</div>
+      <div class="stat-square-value"><%= upcomingCount %></div>
+    </div>
+    <div class="stat-square">
+      <div class="stat-square-label">Registrations</div>
+      <div class="stat-square-value"><%= totalRegistrations %></div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-7">
+      <div class="card-stat p-3 h-100">
+        <h5>Next 5 upcoming events</h5>
+        <table class="table table-sm mt-2">
+          <thead><tr><th>Title</th><th>Category</th><th>Start date</th></tr></thead>
+          <tbody>
+            <% nextEvents.forEach(e => { %>
+              <tr>
+                <td><a href="/events/<%= e._id %>"><%= e.title %></a></td>
+                <td><%= e.category %></td>
+                <td><%= new Date(e.startDate).toLocaleString() %></td>
+              </tr>
+            <% }) %>
+            <% if (nextEvents.length === 0) { %>
+              <tr><td colspan="3" class="text-muted">No upcoming events.</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="popular-square">
+        <div class="popular-square-tag">Most popular</div>
+        <% if (mostPopular) { %>
+          <h3 class="popular-square-title"><%= mostPopular.title %></h3>
+          <p class="popular-square-cat"><%= mostPopular.category %></p>
+          <div class="popular-square-count"><%= mostPopular.confirmedCount %></div>
+          <div class="popular-square-count-label">confirmed registrations</div>
+        <% } else { %>
+          <p class="text-muted">No data yet.</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('partials/foot') %>

@@ -1,0 +1,47 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<div class="container">
+  <h1><%= user ? 'Edit user' : 'New user' %></h1>
+  <% if (error) { %><div class="alert alert-danger"><%= error %></div><% } %>
+  <form method="POST" action="<%= user && user._id ? '/users/' + user._id + '?_method=PUT' : '/users' %>">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">First name</label>
+        <input type="text" name="firstName" class="form-control" required value="<%= user ? user.firstName : '' %>">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Last name</label>
+        <input type="text" name="lastName" class="form-control" required value="<%= user ? user.lastName : '' %>">
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" name="email" class="form-control" required value="<%= user ? user.email : '' %>">
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Department</label>
+        <select name="department" class="form-select" required>
+          <% departments.forEach(d => { %>
+            <option value="<%= d %>" <%= user && user.department === d ? 'selected' : '' %>><%= d %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Role</label>
+        <select name="role" class="form-select" required>
+          <% roles.forEach(r => { %>
+            <option value="<%= r %>" <%= user && user.role === r ? 'selected' : '' %>><%= r %></option>
+          <% }) %>
+        </select>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Interests (comma-separated)</label>
+      <input type="text" name="interests" class="form-control" value="<%= user && user.interests ? user.interests.join(', ') : '' %>">
+    </div>
+    <button class="btn btn-primary"><%= user ? 'Save changes' : 'Create user' %></button>
+    <a href="/users" class="btn btn-link">Cancel</a>
+  </form>
+</div>
+<%- include('../partials/foot') %>

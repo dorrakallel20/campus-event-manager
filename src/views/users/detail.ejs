@@ -1,0 +1,39 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<div class="container">
+  <a href="/users" class="btn btn-sm btn-link ps-0">&larr; Back to users</a>
+  <div class="card card-stat p-4 mb-4">
+    <h1><%= user.firstName %> <%= user.lastName %></h1>
+    <p class="text-muted"><%= user.email %> &middot; <%= user.department %> &middot; <span class="badge bg-info text-dark"><%= user.role %></span></p>
+    <p><strong>Interests:</strong> <%= (user.interests || []).join(', ') || 'None' %></p>
+    <div class="row mt-2">
+      <div class="col-md-6"><strong>Upcoming registrations:</strong> <%= upcoming %></div>
+      <div class="col-md-6"><strong>Past registrations:</strong> <%= past %></div>
+    </div>
+  </div>
+
+  <div class="card card-stat p-3">
+    <h5>Event registration history</h5>
+    <table class="table table-sm">
+      <thead><tr><th>Event</th><th>Category</th><th>Date</th><th>Status</th></tr></thead>
+      <tbody>
+        <% events.forEach(e => { %>
+          <tr>
+            <td><a href="/events/<%= e._id %>"><%= e.title %></a></td>
+            <td><%= e.category %></td>
+            <td><%= new Date(e.startDate).toLocaleString() %></td>
+            <td>
+              <span class="badge <%= e.myReg.status === 'confirmed' ? 'bg-success' : (e.myReg.status === 'waiting' ? 'bg-warning text-dark' : 'bg-secondary') %>">
+                <%= e.myReg.status %>
+              </span>
+            </td>
+          </tr>
+        <% }) %>
+        <% if (events.length === 0) { %>
+          <tr><td colspan="4" class="text-muted">This user has no event registrations.</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%- include('../partials/foot') %>

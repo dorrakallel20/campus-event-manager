@@ -1,0 +1,90 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+<div class="container">
+  <h1 class="mb-4">Analytics</h1>
+
+  <div class="card card-stat p-3 mb-4">
+    <h5>A. Registrations by category</h5>
+    <table class="table table-sm">
+      <thead><tr><th>Category</th><th># Events</th><th>Confirmed registrations</th></tr></thead>
+      <tbody>
+        <% byCategory.forEach(c => { %>
+          <tr><td><%= c.category %></td><td><%= c.eventCount %></td><td><%= c.confirmedRegistrations %></td></tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card card-stat p-3 mb-4">
+    <h5>B. Top 5 most popular events</h5>
+    <table class="table table-sm">
+      <thead><tr><th>Title</th><th>Category</th><th>Capacity</th><th>Confirmed</th><th>Occupancy</th></tr></thead>
+      <tbody>
+        <% topEvents.forEach(e => { %>
+          <tr>
+            <td><%= e.title %></td><td><%= e.category %></td><td><%= e.capacity %></td>
+            <td><%= e.confirmed %></td><td><%= e.occupancy %>%</td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card card-stat p-3 mb-4">
+    <h5>C. Users with no registration (<%= usersNoReg.length %>)</h5>
+    <table class="table table-sm">
+      <thead><tr><th>Name</th><th>Email</th><th>Department</th></tr></thead>
+      <tbody>
+        <% usersNoReg.forEach(u => { %>
+          <tr><td><%= u.firstName %> <%= u.lastName %></td><td><%= u.email %></td><td><%= u.department %></td></tr>
+        <% }) %>
+        <% if (usersNoReg.length === 0) { %>
+          <tr><td colspan="3" class="text-muted">Every user has at least one registration.</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card card-stat p-3 mb-4">
+    <h5>D. Events above average occupancy (average: <%= avgOccupancy %>%)</h5>
+    <table class="table table-sm">
+      <thead><tr><th>Title</th><th>Category</th><th>Capacity</th><th>Confirmed</th><th>Occupancy</th></tr></thead>
+      <tbody>
+        <% aboveAverage.forEach(e => { %>
+          <tr>
+            <td><%= e.title %></td><td><%= e.category %></td><td><%= e.capacity %></td>
+            <td><%= e.confirmed %></td><td><%= e.occupancy %>%</td>
+          </tr>
+        <% }) %>
+        <% if (aboveAverage.length === 0) { %>
+          <tr><td colspan="5" class="text-muted">No events above average.</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card card-stat p-3 mb-4">
+    <h5>E. Most used tags</h5>
+    <table class="table table-sm">
+      <thead><tr><th>Tag</th><th># Events</th></tr></thead>
+      <tbody>
+        <% tagCounts.forEach(t => { %>
+          <tr><td><%= t.tag %></td><td><%= t.eventCount %></td></tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card card-stat p-3 mb-4">
+    <h5>F. Events by month</h5>
+    <table class="table table-sm">
+      <thead><tr><th>Month</th><th># Events</th><th>Total registrations</th></tr></thead>
+      <tbody>
+        <% byMonth.forEach(m => { %>
+          <tr><td><%= m.label %></td><td><%= m.totalEvents %></td><td><%= m.totalRegistrations %></td></tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%- include('partials/foot') %>

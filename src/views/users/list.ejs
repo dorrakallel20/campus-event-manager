@@ -1,0 +1,59 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Users</h1>
+    <a href="/users/new" class="btn btn-primary">+ New user</a>
+  </div>
+
+  <form class="row g-2 mb-4" method="GET" action="/users">
+    <div class="col-md-4">
+      <input type="text" class="form-control" name="q" placeholder="Search by name or email" value="<%= query.q || '' %>">
+    </div>
+    <div class="col-md-3">
+      <select class="form-select" name="department">
+        <option value="">All departments</option>
+        <% departments.forEach(d => { %>
+          <option value="<%= d %>" <%= query.department === d ? 'selected' : '' %>><%= d %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select class="form-select" name="role">
+        <option value="">All roles</option>
+        <% roles.forEach(r => { %>
+          <option value="<%= r %>" <%= query.role === r ? 'selected' : '' %>><%= r %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="col-md-2"><button class="btn btn-outline-dark w-100">Go</button></div>
+  </form>
+
+  <div class="table-responsive">
+    <table class="table table-hover bg-white">
+      <thead><tr><th>Name</th><th>Email</th><th>Department</th><th>Role</th><th>Interests</th><th>Registrations</th><th></th></tr></thead>
+      <tbody>
+        <% users.forEach(u => { %>
+          <tr>
+            <td><a href="/users/<%= u._id %>"><%= u.firstName %> <%= u.lastName %></a></td>
+            <td><%= u.email %></td>
+            <td><%= u.department %></td>
+            <td><span class="badge bg-info text-dark"><%= u.role %></span></td>
+            <td><%= (u.interests || []).join(', ') %></td>
+            <td><%= u.registrationCount %></td>
+            <td>
+              <a href="/users/<%= u._id %>/edit" class="btn btn-sm btn-outline-secondary">Edit</a>
+              <form method="POST" action="/users/<%= u._id %>?_method=DELETE" class="d-inline" onsubmit="return confirm('Delete this user?')">
+                <button class="btn btn-sm btn-outline-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+        <% if (users.length === 0) { %>
+          <tr><td colspan="7" class="text-muted text-center">No users match your filters.</td></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%- include('../partials/foot') %>

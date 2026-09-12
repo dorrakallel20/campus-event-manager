@@ -1,0 +1,235 @@
+:root {
+  --navy: #171a2f;
+  --navy-2: #241b3a;
+  --teal: #1f5c66;
+  --gold: #c98a1f;
+  --gold-light: #e2a94a;
+  --coral: #e0245e;
+  --coral-dark: #b81b49;
+  --cream: #f4ede1;
+  --ink: #171a2f;
+}
+
+body {
+  background-color: var(--cream);
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--ink);
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--navy);
+}
+
+/* --- Navbar: gradient hero-style header --- */
+.navbar-campus {
+  background: linear-gradient(120deg, var(--navy-2) 0%, var(--navy) 45%, var(--teal) 100%);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 3px solid var(--gold);
+}
+.brand-mark {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+.brand-mark-accent {
+  color: var(--gold-light);
+  font-style: italic;
+}
+.navbar-campus .nav-link {
+  color: #e9e4d8 !important;
+  font-weight: 500;
+  margin-left: 0.5rem;
+  transition: color 0.15s ease;
+}
+.navbar-campus .nav-link:hover {
+  color: var(--gold-light) !important;
+}
+
+/* --- Cards --- */
+.card-stat {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(23,26,47,0.08);
+  background: #ffffff;
+}
+.card-stat h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+/* --- Buttons: pill-shaped, coral CTA like the inspiration --- */
+.btn {
+  border-radius: 999px !important;
+  font-weight: 600;
+  padding-left: 1.15rem;
+  padding-right: 1.15rem;
+}
+.btn-primary {
+  background-color: var(--coral);
+  border-color: var(--coral);
+  color: #fff;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--coral-dark);
+  border-color: var(--coral-dark);
+}
+.btn-outline-dark {
+  color: var(--navy);
+  border-color: var(--navy);
+  background: transparent;
+}
+.btn-outline-dark:hover {
+  background-color: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+.btn-outline-secondary {
+  color: var(--teal);
+  border-color: var(--teal);
+}
+.btn-outline-secondary:hover {
+  background-color: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+}
+.btn-outline-danger {
+  color: var(--coral-dark);
+  border-color: var(--coral-dark);
+}
+.btn-outline-danger:hover {
+  background-color: var(--coral-dark);
+  border-color: var(--coral-dark);
+}
+.btn-link { color: var(--gold); font-weight: 600; }
+.btn-link:hover { color: var(--coral); }
+
+/* --- Form controls: soften the edges --- */
+.form-control, .form-select {
+  border-radius: 12px;
+  border-color: #ded5c4;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 0.2rem rgba(201,138,31,0.15);
+}
+
+/* --- Badges: pill tags --- */
+.badge {
+  border-radius: 999px;
+  font-weight: 500;
+  padding: 0.4em 0.85em;
+}
+.badge.bg-secondary { background-color: var(--navy) !important; }
+.badge.bg-info { background-color: var(--gold) !important; color: #fff !important; }
+.badge-full { background-color: var(--coral-dark) !important; }
+
+/* --- Tables --- */
+.table {
+  border-radius: 14px;
+  overflow: hidden;
+}
+.table thead {
+  background-color: var(--navy);
+  color: #f4ede1;
+}
+.table thead th { font-weight: 600; border: none; }
+.table-hover tbody tr:hover { background-color: #faf6ee; }
+
+a { color: var(--gold); text-decoration: none; }
+a:hover { color: var(--coral); }
+
+footer.app-footer {
+  text-align: center;
+  color: #a39a89;
+  padding: 2.5rem 0 1rem;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* --- Dashboard: square stat grid --- */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.stat-square {
+  aspect-ratio: 1 / 1;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 4px 18px rgba(23,26,47,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 4px solid var(--gold);
+  text-align: center;
+  padding: 0.5rem;
+}
+.stat-square-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--teal);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.stat-square-value {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+@media (max-width: 768px) {
+  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* --- Dashboard: most popular event square --- */
+.popular-square {
+  background: linear-gradient(140deg, var(--navy-2), var(--navy) 55%, var(--teal));
+  border-radius: 18px;
+  padding: 1.75rem;
+  color: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.popular-square-tag {
+  display: inline-block;
+  background: var(--coral);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3em 0.9em;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+  width: fit-content;
+}
+.popular-square-title {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+.popular-square-cat {
+  color: var(--gold-light);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.popular-square-count {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+.popular-square-count-label {
+  color: #d8d2c4;
+  font-size: 0.85rem;
+}

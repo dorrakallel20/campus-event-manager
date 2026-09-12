@@ -1,0 +1,84 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+<div class="container">
+  <a href="/events" class="btn btn-sm btn-link ps-0">&larr; Back to events</a>
+  <div class="card card-stat p-4 mb-4">
+    <div class="d-flex justify-content-between">
+      <h1><%= event.title %></h1>
+      <% if (confirmed >= event.capacity) { %><span class="badge badge-full align-self-start">FULL</span><% } %>
+    </div>
+    <p class="text-muted"><%= event.description %></p>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <p><strong>Category:</strong> <%= event.category %></p>
+        <p><strong>Tags:</strong>
+          <% event.tags.forEach(t => { %><span class="badge bg-secondary me-1"><%= t %></span><% }) %>
+        </p>
+        <p><strong>Start:</strong> <%= new Date(event.startDate).toLocaleString() %></p>
+        <p><strong>End:</strong> <%= new Date(event.endDate).toLocaleString() %></p>
+      </div>
+      <div class="col-md-6">
+        <p><strong>Location:</strong> <%= event.location.building %>, room <%= event.location.room %> (<%= event.location.campus %>)</p>
+        <p><strong>Organizer:</strong> <%= event.organizer ? event.organizer.firstName + ' ' + event.organizer.lastName : 'Unknown' %></p>
+        <p><strong>Capacity:</strong> <%= event.capacity %></p>
+        <p><strong>Confirmed registrations:</strong> <%= confirmed %> (<%= occupancy %>% occupancy)</p>
+      </div>
+    </div>
+    <div>
+      <a href="/events/<%= event._id %>/edit" class="btn btn-outline-secondary btn-sm">Edit event</a>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-7">
+      <div class="card card-stat p-3">
+        <h5>Participants (<%= participants.length %>)</h5>
+        <table class="table table-sm">
+          <thead><tr><th>User</th><th>Status</th><th>Registered at</th><th></th></tr></thead>
+          <tbody>
+            <% participants.forEach(p => { %>
+              <tr>
+                <td><%= p.user ? p.user.firstName + ' ' + p.user.lastName : 'Unknown user' %></td>
+                <td>
+                  <span class="badge <%= p.status === 'confirmed' ? 'bg-success' : (p.status === 'waiting' ? 'bg-warning text-dark' : 'bg-secondary') %>">
+                    <%= p.status %>
+                  </span>
+                </td>
+                <td><%= new Date(p.registeredAt).toLocaleDateString() %></td>
+                <td>
+                  <form method="POST" action="/events/<%= event._id %>/unregister" onsubmit="return confirm('Remove this registration?')">
+                    <input type="hidden" name="userId" value="<%= p.userId %>">
+                    <button class="btn btn-sm btn-outline-danger">Remove</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+            <% if (participants.length === 0) { %>
+              <tr><td colspan="4" class="text-muted">No registrations yet.</td></tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="card card-stat p-3">
+        <h5>Register a user</h5>
+        <form method="POST" action="/events/<%= event._id %>/register">
+          <select name="userId" class="form-select mb-2" required>
+            <option value="">Select a user...</option>
+            <% allUsers.forEach(u => { %>
+              <% if (!registeredUserIds.has(u._id.toString())) { %>
+                <option value="<%= u._id %>"><%= u.firstName %> <%= u.lastName %> (<%= u.department %>)</option>
+              <% } %>
+            <% }) %>
+          </select>
+          <button class="btn btn-primary w-100">Register</button>
+        </form>
+        <% if (confirmed >= event.capacity) { %>
+          <p class="small text-muted mt-2">Event is full — new registrations will be placed on the waiting list.</p>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/foot') %>
